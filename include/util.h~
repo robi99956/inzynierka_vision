@@ -22,7 +22,7 @@
 #define ABS(x) ((x>0)?x:-x)
 #endif
 
-#define INFO(_format, ...) fprintf(stderr, _format"\n", ##__VA_ARGS__)
+#define INFO(_format, ...) fprintf(stderr, _format, ##__VA_ARGS__)
 
 static inline uint8_t saturate(int x)
 {

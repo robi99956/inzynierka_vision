@@ -59,6 +59,4 @@ int tcp_server_close( tcp_server_info_t * info );
 
 int udp_send_mono_buffer( udp_client_info_t * info, mono_buffer_t * img );
 int udp_send_rgb_buffer( udp_client_info_t * info, rgb_buffer_t * img );
-
-int tcp_send_multipacket_buffer( int fd, uint8_t * buf, uint32_t len );
 #endif

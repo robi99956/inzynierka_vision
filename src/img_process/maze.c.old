@@ -1,3 +1,4 @@
+
 #include "util.h"
 #include "data_types.h"
 
@@ -22,9 +23,9 @@ contour_t * djikstra_solve_maze( mono_buffer_t * img, point_t start, point_t end
 	bool solution_found = 0;
 	contour_t * result = NULL;
 
-	int8_t dydx[4][2] = 
+	int8_t dydx[8][2] = 
 	{
-			{-1, 0}, {0, 1}, {1, 0}, {0, -1}
+			{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}
 	};
 
 	INFO("Przed mapa");
@@ -34,7 +35,6 @@ contour_t * djikstra_solve_maze( mono_buffer_t * img, point_t start, point_t end
 		index_pair_t pair = index_pair_stack_pop(stack);
 		point_t point = POINT(pair.idx1, pair.idx2);
 
-		visited[ point.x+point.y*w ] = 0;
 		// koniec szukania
 		if( point.x == end.x && point.y == end.y ) 
 		{
@@ -42,7 +42,7 @@ contour_t * djikstra_solve_maze( mono_buffer_t * img, point_t start, point_t end
 //			break;
 		}
 
-		for( uint8_t i=0; i<4; i++ )
+		for( uint8_t i=0; i<8; i++ )
 		{
 				int8_t dy = dydx[i][0];
 				int8_t dx = dydx[i][1];
@@ -53,16 +53,15 @@ contour_t * djikstra_solve_maze( mono_buffer_t * img, point_t start, point_t end
 				current_cost = cost_map[ point.x + point.y*w ] + 
 					(MONO_PIXEL_WHITE - img->data[ current_idx ] + 1);
 
-				if( img->data[current_idx] != MONO_PIXEL_BLACK && cost_map[current_idx] > current_cost )
+				if( img->data[current_idx] != MONO_PIXEL_BLACK && visited[current_idx] < 4
+								&& cost_map[current_idx] > current_cost )
 				{
-					cost_map[current_idx] = current_cost;
-					if( current_cost > max_cost ) max_cost = current_cost;
+					index_pair_stack_push(stack, INDEX_PAIR(point.x+dx, point.y+dy));
+					visited[current_idx]++;
 
-					if( visited[ current_idx ] == 0 )
-					{
-						index_pair_stack_push(stack, INDEX_PAIR(point.x+dx, point.y+dy));
-						visited[ current_idx ] = 1;
-					}
+					cost_map[current_idx] = current_cost;
+
+					if( current_cost > max_cost ) max_cost = current_cost;
 				}
 		}
 	}	
@@ -95,7 +94,7 @@ contour_t * djikstra_solve_maze( mono_buffer_t * img, point_t start, point_t end
 	current_cost = cost_map[ end.x + end.y*w ];
 	point_t point = end;
 	point_t next_point = end;
-#define SEARCH_RADIUS 2
+#define SEARCH_RADIUS 1
 
 	while( current_cost != 1 )
 	{
@@ -108,7 +107,7 @@ contour_t * djikstra_solve_maze( mono_buffer_t * img, point_t start, point_t end
 				
 				current_idx = (point.x+dx) + (point.y+dy)*w;
 
-				if( cost_map[current_idx] < current_cost /*&& visited[current_idx] != 0*/ )
+				if( cost_map[current_idx] < current_cost && visited[current_idx] != 0 )
 				{
 					current_cost = cost_map[current_idx];
 					next_point = POINT(point.x+dx, point.y+dy);	

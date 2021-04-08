@@ -32,11 +32,13 @@ void net0_send_frame( net0_handle_t * net0_handle, net0_frame_info_t * info, voi
 	net0_send_byte(net0_handle, info->src, NET0_BYTE_TYPE_STANDARD, &control);		
 	net0_send_byte(net0_handle, info->cmd, NET0_BYTE_TYPE_STANDARD, &control);
 	net0_send_byte(net0_handle, net0_handle->nco++, NET0_BYTE_TYPE_STANDARD, &control);		
+	fprintf(stderr, "net0_send_frame send header\n");
 	uint8_t * data_bytes = (uint8_t*)data;
 	for( uint16_t i=0; i<info->size; i++ )
 	{
 		net0_send_byte(net0_handle, data_bytes[i], NET0_BYTE_TYPE_STANDARD, &control);
 	}
+	fprintf(stderr, "net0_send_frame send payload\n");
 
 	net0_send_byte(net0_handle, NET0_ETX, NET0_BYTE_TYPE_SPECIAL, NULL);		
 	net0_send_byte(net0_handle, control, NET0_BYTE_TYPE_SPECIAL, NULL);

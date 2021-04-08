@@ -81,7 +81,7 @@ mono_buffer_t * mono_buffer_expand_black( mono_buffer_t * in, mono_pixel_t expan
 							buf->data[ bottom_idx ] != MONO_PIXEL_WHITE) &&
 							buf->data[center_idx] == MONO_PIXEL_WHITE )
 						{
-							out->data[ center_idx ] = current_color;	
+							out->data[ center_idx ] = 50;	
 						}
 					}
 			}

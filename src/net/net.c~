@@ -176,7 +176,7 @@ int tcp_server_init( uint32_t port, tcp_callback_t callback, void * arg, tcp_ser
 		return status;
 	}
 
-	status = setsockopt(info->basic.socket_fd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
+	status = setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
 	if( status < 0 ) 
 	{
 		fprintf(stderr, "cant set socket opt\n");

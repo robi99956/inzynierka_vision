@@ -58,7 +58,7 @@ int camera_grab_frame_yuv( struct vdIn * handle, yuv_buffer_t * out )
 	if( out->data != NULL ) return -1;
 
 	int retval = uvcGrab(handle);
-	if( retval < 0 ) return retval;
+	if( retval < 0 ) return -1;
 
 	out->info = BUFFER_INFO(CAMERA_FRAME_WIDTH, CAMERA_FRAME_HEIGTH);
 	out->data = (yuv_macropixel_t*)handle->framebuffer;

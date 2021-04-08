@@ -74,7 +74,7 @@ final:
 
 upload:
 	$(info Uploading binary to target device...)
-	#sshpass -p '$(TARGET_PASSWORD)' pkill $(EXEC_NAME)
+	sshpass -p '$(TARGET_PASSWORD)' pkill $(EXEC_NAME)
 	sshpass -p '$(TARGET_PASSWORD)' scp bin/$(EXEC_NAME) $(TARGET_USER)@$(TARGET_ADDRESS):$(TARGET_PATH)/$(EXEC_NAME)
 
 clean:

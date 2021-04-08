@@ -28,7 +28,7 @@ net0_handle_t * psoc_com_init( char * uart_path )
 	net0_handle.user_data = uart_data;
 
 	pthread_t rec_thread_handle;
-	pthread_create(&rec_thread_handle, NULL, net0_rec_thread, &net0_handle);
+	pthread_create(&rec_thread_handle, NULL, (void*(*)(void*))net0_rec_thread, &net0_handle);
 
 	return &net0_handle;
 }

@@ -145,7 +145,7 @@ contour_t * release_contour( contour_t * contour )
 
 void contour_scale_points( contour_t * contour, float scale_x, float scale_y )
 {
-	for( uint32_t i=0; i<contour->size; i++ )
+	for( uint32_t i=0; i<contour.size; i++ )
 	{
 		contour->points[i].x *= scale_x;
 		contour->points[i].y *= scale_y;
@@ -154,7 +154,7 @@ void contour_scale_points( contour_t * contour, float scale_x, float scale_y )
 
 void contour_add_offset( contour_t * contour, int16_t offset_x, int16_t offset_y )
 {
-	for( uint32_t i=0; i<contour->size; i++ )
+	for( uint32_t i=0; i<contour.size; i++ )
 	{
 		contour->points[i].x += offset_x;
 		contour->points[i].y += offset_y;
@@ -165,7 +165,7 @@ void contour_swap_coordinates( contour_t * contour )
 {
 	int16_t tmp;
 
-	for( uint32_t i=0; i<contour->size; i++ )
+	for( uint32_t i=0; i<contour.size; i++ )
 	{
 		tmp = contour->points[i].x;
 		contour->points[i].x = contour->points[i].y;

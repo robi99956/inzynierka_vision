@@ -51,6 +51,7 @@ void net0_ll_write( net0_handle_t * net0, uint8_t byte )
 	uart_data_t * uart = (uart_data_t*)net0->user_data;
 
 	int retval = write(uart->fd, &byte, 1);
+	fprintf(stderr, "net0_ll_write status %d\n", retval);
 }
 
 uint8_t net0_ll_read( net0_handle_t * net0 )

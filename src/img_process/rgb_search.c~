@@ -30,7 +30,9 @@ point_t find_largest_area( rgb_buffer_t * img, rgb_pixel_t color, uint8_t tolera
 		}		
 	});
 
-	if( max_cont == NULL ) return POINT(0, 0);
+	INFO("po for each, cont = %p, max_cont - %p", cont, max_cont);
+
+	if( cont == NULL ) return POINT(0, 0);
 
 	uint32_t cent_x=0, cent_y=0;
 	uint32_t size = max_cont->size;
